@@ -1,0 +1,166 @@
+<!-- index.wxml -->
+<view class="container">
+  <form bindsubmit="onSubmit">
+    <view class="form-row">
+      <!-- 照片 -->
+      <view class="form-item">
+        <label>照片</label>
+        <t-upload fileList="{{form.photo}}" bindchange="onPhotoChange" />
+      </view>
+
+      <!-- 车型 -->
+      <view class="form-item">
+        <label>车型</label>
+        <t-input value="{{form.model}}" placeholder="请输入车型" bindinput="onInputChange" data-field="model" />
+      </view>
+
+      <!-- 年份 -->
+      <view class="form-item">
+        <label>年份</label>
+        <picker mode="date" fields="month" value="{{form.year}}" bindchange="onYearChange">
+          <t-input placeholder="请选择年份" data-field="year" value="{{form.year}}" />
+        </picker>
+      </view>
+
+      <!-- 公里数 -->
+      <view class="form-item">
+        <label>公里数</label>
+        <t-input type="number" value="{{form.mileage}}" placeholder="请输入公里数" bindinput="onInputChange" data-field="mileage" />
+      </view>
+    </view>
+
+    <view class="form-row">
+      <!-- 车牌号 -->
+      <view class="form-item">
+        <label>车牌号</label>
+        <t-input value="{{form.licensePlate}}" placeholder="请输入车牌号" bindinput="onInputChange" data-field="licensePlate" />
+      </view>
+
+      <!-- 户头数 -->
+      <view class="form-item">
+        <label>户头数</label>
+        <t-picker visible="{{accountNumberPickerVisible}}" value="{{form.accountNumber}}" data-key="accountNumber" title="选择户头数" cancelBtn="取消" confirmBtn="确认" bindchange="onPickerChange" bindpick="onColumnChange" bindcancel="onPickerCancel">
+          <t-picker-item options="{{accountNumbers}}" />
+        </t-picker>
+        <t-cell class="mb-16" title="选择户头数" arrow hover note="{{cityText}}" bind:click="showAccountNumberPicker" />
+      </view>
+
+      <!-- 颜色 -->
+      <view class="form-item">
+        <label>颜色</label>
+        <t-input value="{{form.color}}" placeholder="请输入颜色" bindinput="onInputChange" data-field="color" />
+      </view>
+
+      <!-- 交强险 -->
+      <view class="form-item">
+        <label>交强险</label>
+        <t-radio-group bindchange="onInsuranceCompulsoryChange" data-field="insuranceCompulsory">
+          <t-radio value="true" checked="{{form.insuranceCompulsory === 'true'}}">有</t-radio>
+          <t-radio value="false" checked="{{form.insuranceCompulsory === 'false'}}">无</t-radio>
+        </t-radio-group>
+      </view>
+    </view>
+
+    <view class="form-row" wx:if="{{form.insuranceCompulsory === 'true'}}">
+      <!-- 交强险截止日期 -->
+      <view class="form-item">
+        <label>交强险截止日期</label>
+        <picker mode="date" fields="day" value="{{form.insuranceCompulsoryEndDate}}" bindchange="onEndDateChange">
+          <t-input placeholder="请选择交强险截止日期" data-field="insuranceCompulsoryEndDate" value="{{form.insuranceCompulsoryEndDate}}" />
+        </picker>
+      </view>
+    </view>
+
+    <view class="form-row">
+      <!-- 三者险 -->
+      <view class="form-item">
+        <label>三者险</label>
+        <t-radio-group bindchange="onInsuranceThirdPartyChange" data-field="insuranceThirdParty">
+          <t-radio value="true" checked="{{form.insuranceThirdParty === 'true'}}">有</t-radio>
+          <t-radio value="false" checked="{{form.insuranceThirdParty === 'false'}}">无</t-radio>
+        </t-radio-group>
+      </view>
+    </view>
+
+    <view class="form-row" wx:if="{{form.insuranceThirdParty === 'true'}}">
+      <!-- 三者险截止日期 -->
+      <view class="form-item">
+        <label>三者险截止日期</label>
+        <t-picker visible="{{insuranceThirdPartyEndDatePickerVisible}}" value="{{form.insuranceThirdPartyEndDate}}" data-key="insuranceThirdPartyEndDate" title="选择三者险截止日期" cancelBtn="取消" confirmBtn="确认" bindchange="onPickerChange" bindpick="onColumnChange" bindcancel="onPickerCancel">
+          <t-picker-item options="{{dates}}" />
+        </t-picker>
+        <view bindtap="showInsuranceThirdPartyEndDatePicker">{{form.insuranceThirdPartyEndDate || '请选择三者险截止日期'}}</view>
+      </view>
+    </view>
+
+    <view class="form-row">
+      <!-- 原车主姓名 -->
+      <view class="form-item">
+        <label>原车主姓名</label>
+        <t-input value="{{form.previousOwnerName}}" placeholder="请输入原车主姓名" bindinput="onInputChange" data-field="previousOwnerName" />
+      </view>
+
+      <!-- 原车主微信号 -->
+      <view class="form-item">
+        <label>原车主微信号</label>
+        <t-input value="{{form.previousOwnerWeChat}}" placeholder="请输入原车主微信号" bindinput="onInputChange" data-field="previousOwnerWeChat" />
+      </view>
+
+      <!-- 原车主电话 -->
+      <view class="form-item">
+        <label>原车主电话</label>
+        <t-input value="{{form.previousOwnerPhone}}" placeholder="请输入原车主电话" bindinput="onInputChange" data-field="previousOwnerPhone" />
+      </view>
+
+      <!-- 车架号 -->
+      <view class="form-item">
+        <label>车架号</label>
+        <t-input value="{{form.vehicleFrameNumber}}" placeholder="请输入车架号" bindinput="onInputChange" data-field="vehicleFrameNumber" />
+      </view>
+    </view>
+
+    <view class="form-row">
+      <!-- 收车金额 -->
+      <view class="form-item">
+        <label>收车金额</label>
+        <t-input value="{{form.purchaseAmount}}" placeholder="请输入收车金额" bindinput="onInputChange" data-field="purchaseAmount" />
+      </view>
+
+      <!-- 收车人 -->
+      <view class="form-item">
+        <label>收车人</label>
+        <t-picker visible="{{purchaserPickerVisible}}" value="{{form.purchaser}}" data-key="purchaser" title="选择收车人" cancelBtn="取消" confirmBtn="确认" bindchange="onPickerChange" bindpick="onColumnChange" bindcancel="onPickerCancel">
+          <t-picker-item options="{{staffList}}" />
+        </t-picker>
+        <view bindtap="showPurchaserPicker">{{form.purchaser || '请选择收车人'}}</view>
+      </view>
+    </view>
+
+    <view class="form-row">
+      <!-- 额外费用 -->
+      <view class="form-item">
+        <label>额外费用</label>
+        <t-radio-group bindchange="onAdditionalFeeChange" data-field="additionalFee">
+          <t-radio value="true" checked="{{form.additionalFee === 'true'}}">有</t-radio>
+          <t-radio value="false" checked="{{form.additionalFee === 'false'}}">无</t-radio>
+        </t-radio-group>
+      </view>
+    </view>
+
+    <view class="form-row" wx:if="{{form.additionalFee === 'true'}}">
+      <!-- 额外费用详情 -->
+      <view class="form-item">
+        <label>额外费用详情</label>
+        <t-input value="{{form.additionalFeeDetail}}" placeholder="请输入费用详情" bindinput="onInputChange" data-field="additionalFeeDetail" />
+        <t-input type="number" value="{{form.additionalFeeAmount}}" placeholder="请输入费用金额" bindinput="onInputChange" data-field="additionalFeeAmount" />
+      </view>
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="form-row">
+      <view class="form-item">
+        <t-button form-type="submit" class="button">提交</t-button>
+      </view>
+    </view>
+  </form>
+</view>

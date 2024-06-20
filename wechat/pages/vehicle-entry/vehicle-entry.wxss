@@ -1,0 +1,50 @@
+/* app.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #f8f8f8;
+}
+
+.form-item {
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  background-color: #ffffff;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.form-item label {
+  display: block;
+  margin-bottom: 10rpx;
+  font-weight: bold;
+  width: 40%;
+}
+
+.form-item .input, .form-item .picker-view, .form-item .checkbox-group, .form-item .radio-group {
+  margin-top: 10rpx;
+}
+
+.t-button {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+}
+
+.t-upload {
+  display: block;
+  width: 100%;
+}
+
+.picker-view {
+  display: block;
+  width: 100%;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.radio-group radio {
+  flex: 1;
+}

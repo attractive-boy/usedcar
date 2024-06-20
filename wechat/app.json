@@ -1,0 +1,37 @@
+{
+    "pages": [
+        "pages/home/home",
+        "pages/vehicle-entry/vehicle-entry",
+        "pages/vehicle-inventory/vehicle-inventory"
+    ],
+    "tabBar": {
+        "custom": true,
+        "color": "#666666",
+        "selectedColor": "#FF5F15",
+        "backgroundColor": "#ffffff",
+        "borderStyle": "black",
+        "list": [
+            {
+                "pagePath": "pages/home/home",
+                "text": "客户"
+            },
+            {
+                "pagePath": "pages/vehicle-entry/vehicle-entry",
+                "text": "员工"
+            }
+        ]
+    },
+    "subpackages": [],
+    "usingComponents": {
+        "t-button": "tdesign-miniprogram/button/button",
+        "t-icon": "tdesign-miniprogram/icon/icon"
+    },
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#f6f6f6",
+        "backgroundColor": "#f6f6f6",
+        "navigationBarTitleText": "TDesign",
+        "navigationBarTextStyle": "black"
+    },
+    "sitemapLocation": "sitemap.json"
+}
