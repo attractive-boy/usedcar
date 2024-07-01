@@ -2,7 +2,8 @@
     "pages": [
         "pages/home/home",
         "pages/vehicle-entry/vehicle-entry",
-        "pages/vehicle-inventory/vehicle-inventory"
+        "pages/vehicle-inventory/vehicle-inventory",
+        "pages/sale"
     ],
     "tabBar": {
         "custom": true,
@@ -17,8 +18,13 @@
             },
             {
                 "pagePath": "pages/vehicle-entry/vehicle-entry",
-                "text": "员工"
-            }
+                "text": "收车录入"
+            },
+            {
+                "pagePath": "pages/vehicle-inventory/vehicle-inventory",
+                "text": "车辆库存"
+            },
+            {}
         ]
     },
     "subpackages": [],

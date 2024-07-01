@@ -1,2 +1,20 @@
 <!--pages/vehicle-inventory/vehicle-inventory.wxml-->
-<text>pages/vehicle-inventory/vehicle-inventory.wxml</text>
+<view class="example-search">
+  <t-search model:value="{{searchValue}}" placeholder="请输入相关关键字" />
+</view>
+<block wx:for="{{vehicleList}}" wx:key="id" >
+  <t-swipe-cell>
+    <t-cell
+      bordered="{{false}}"
+      title="{{item.year}}年 {{item.model}} {{item.license_plate}}"
+      description="价格：￥{{item.mileage}}"
+      note="左滑操作"
+      image="{{item.photo}}"
+    />
+    <view slot="right" class="btn-wrapper">
+    <view class="btn favor-btn" bind:tap="onFavor">收藏</view>
+    <view class="btn edit-btn" bind:tap="onEdit">编辑</view>
+    <view class="btn delete-btn" bind:tap="onDelete">删除</view>
+  </view>
+  </t-swipe-cell>
+</block>

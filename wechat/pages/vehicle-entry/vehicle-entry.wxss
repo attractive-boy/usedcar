@@ -48,3 +48,7 @@
 .radio-group radio {
   flex: 1;
 }
+
+.submit-btn{
+  margin-bottom: 100rpx;
+}

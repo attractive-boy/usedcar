@@ -1,2 +1,4 @@
-<!--pages/home/home.wxml-->
-<text>pages/home/home.wxml</text>
+<!-- 使用flex布局居中 -->
+<view style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+  <text style="">欢迎来到小程序</text>
+</view>

@@ -28,6 +28,7 @@ const list = [
   {
     value: 'sale',
     label: '销售',
+    url: '/pages/sale/sale',
     children: [],
   },
 ];

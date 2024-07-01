@@ -16,7 +16,7 @@
             "args": [
                 "run",
                 "--no-debugger",
-                "--no-reload"
+                "--port=81"
             ],
             "jinja": true,
             "autoStartBrowser": false

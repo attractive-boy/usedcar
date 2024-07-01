@@ -1,4 +1,5 @@
 import gulpError from './utils/gulpError';
+import { request } from './utils/api'
 App({
     onShow() {
         if (gulpError !== 'gulpErrorPlaceHolder') {
@@ -7,4 +8,7 @@ App({
             });
         }
     },
+    onLaunch() {
+    },
+    request,
 });

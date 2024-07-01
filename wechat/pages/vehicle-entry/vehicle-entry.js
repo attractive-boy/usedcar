@@ -20,7 +20,8 @@ Page({
       purchaser: '',
       additionalFee: false,
       additionalFeeDetail: '',
-      additionalFeeAmount: ''
+      additionalFeeAmount: '',
+      purchaserPickerVisible:false,
     },
     accountNumbers: [
       { label: '1', value: '1' },
@@ -33,15 +34,29 @@ Page({
       { label: '8', value: '8' },
       { label: '9', value: '9' },
     ],
-    staffList: ['员工1', '员工2', '员工3']
+    staffList: [],
+    purchaserName: '',
+    fileList: [],
   },
-
-  onPhotoChange(e) {
-    this.setData({ 'form.photo': e.detail.fileList });
+  onLoad(){
+    this.getUsers();
+  },
+  getUsers(){
+    const that = this;
+    getApp().request('/user','GET').then(res => {
+      let data = res.data;
+      data = data.map(item => {
+        item.label = `${item.name} - ${item.phone}`;
+        item.value = item.id;
+        return item;
+      })
+      that.setData({ staffList: data });
+    })
   },
 
   onInputChange(e) {
     const field = e.currentTarget.dataset.field;
+    console.log(field,e.detail.value)
     this.setData({ [`form.${field}`]: e.detail.value });
   },
 
@@ -50,7 +65,7 @@ Page({
   },
 
   onAccountNumberChange(e) {
-    this.setData({ 'form.accountNumber': this.data.accountNumbers[e.detail.value] });
+    this.setData({ 'form.accountNumber': e.detail.value });
   },
 
   onInsuranceCompulsoryChange(e) {
@@ -76,7 +91,13 @@ Page({
   },
 
   onPurchaserChange(e) {
-    this.setData({ 'form.purchaser': this.data.staffList[e.detail.value] });
+    this.setData({ 
+      'form.purchaser':  e.detail.value,
+      purchaserName: this.data.staffList.find(item => item.id == e.detail.value).name
+    });
+  },
+  showPurchaserPicker(){
+    this.setData({ purchaserPickerVisible: true });
   },
 
   onAdditionalFeeChange(e) {
@@ -96,10 +117,62 @@ Page({
   },
   onSubmit() {
     console.log('Form data:', this.data.form);
-    wx.showToast({
-      title: '提交成功',
-      icon: 'success',
-      duration: 2000
+    getApp().request('/vehicle', 'POST', this.data.form).then(res => {
+      if(res.status == 201){
+        wx.showToast({
+          title: '提交成功',
+          icon: 'success',
+          duration: 2000
+        });
+      }
+      else{
+        wx.showToast({
+          title: '提交失败',
+          icon: 'error',
+          duration: 2000
+        });
+      }
     });
-  }
+  },
+  handleAdd(e) {
+    const { files } = e.detail;
+
+    files.forEach(file => this.uploadFile(file))
+  },
+  uploadFile(file) {
+    const { fileList } = this.data;
+
+    this.setData({
+      fileList: [...fileList, { ...file, status: 'loading' }],
+    });
+    const { length } = fileList;
+    const { baseUrl } = require('../../config/index');
+    const task = wx.uploadFile({
+      url: `${baseUrl}/vehicle/upload`,
+      filePath: file.url,
+      name: 'file',
+      formData: { user: 'test' },
+      success: (res) => {
+        console.log(res);
+        this.setData({
+          [`fileList[${length}].status`]: 'done',
+          'form.photo': baseUrl + '/vehicle/download/' + JSON.parse(res.data).filename
+        });
+      },
+    });
+    task.onProgressUpdate((res) => {
+      this.setData({
+        [`fileList[${length}].percent`]: res.progress,
+      });
+    });
+  },
+  handleRemove(e) {
+    const { index } = e.detail;
+    const { fileList } = this.data;
+
+    fileList.splice(index, 1);
+    this.setData({
+      fileList,
+    });
+  },
 });
