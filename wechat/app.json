@@ -3,7 +3,7 @@
         "pages/home/home",
         "pages/vehicle-entry/vehicle-entry",
         "pages/vehicle-inventory/vehicle-inventory",
-        "pages/sale"
+        "pages/sale/sale"
     ],
     "tabBar": {
         "custom": true,
@@ -24,7 +24,10 @@
                 "pagePath": "pages/vehicle-inventory/vehicle-inventory",
                 "text": "车辆库存"
             },
-            {}
+            {
+              "pagePath": "pages/sale/sale",
+              "text": "销售模块"
+            }
         ]
     },
     "subpackages": [],

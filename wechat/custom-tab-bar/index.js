@@ -51,6 +51,9 @@ Component({
             }
           });
         }
+        if (item.value === value) {
+          targetUrl = item.url;
+        }
       });
 
       if (targetUrl) {
